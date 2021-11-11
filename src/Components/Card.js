@@ -24,7 +24,7 @@ export default class Card extends React.Component {
         <ContainerCard>
             <CardPhoto src={this.props.imagem} />
             <CardText>{this.props.nomeCard}</CardText>
-            <CardText>Valor: {this.props.valor}</CardText>
+            <CardText>Valor: R${this.props.valor}</CardText>
             <CardButton> 
             <button onClick={this.onClickEnviar}> Adicionar ao carrinho </button>
           </CardButton>
