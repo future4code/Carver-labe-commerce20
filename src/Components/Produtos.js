@@ -28,26 +28,32 @@ align-items: center;
 export default class Produtos extends React.Component {
     state = {
         viagens: [{
+            id: 1,
             imagem: lua,
             nomeCard: "Lua",
             valor: 300000
         },{
+            id: 2,
             imagem: europa,
             nomeCard: "Europa",
             valor: 300000
         },{
+            id: 3,
             imagem: plutao,
             nomeCard: "Plutão",
             valor: 300000
         },{
+            id: 4,
             imagem: marte,
             nomeCard: "Marte",
             valor: 300000
         },{
+            id: 5,
             imagem: titan,
             nomeCard: "Titan",
             valor: 300000
         },{
+            id: 6,
             imagem: venus,
             nomeCard: "Venus",
             valor: 300000
