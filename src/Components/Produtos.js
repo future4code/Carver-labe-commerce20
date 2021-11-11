@@ -1,6 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import Card from './Card';
+import lua from '../img/lua.jpeg';
+import europa from '../img/europa.jpeg';
+import marte from '../img/marte.jpeg';
+import plutao from '../img/plutao.jpg';
+import titan from '../img/titan.jpeg';
+import venus from '../img/venus.jpeg';
 
 const ContainerProdutos = styled.div`
 display: grid;
@@ -20,7 +26,45 @@ align-items: center;
 `
 
 export default class Produtos extends React.Component {
+    state = {
+        viagens: [{
+            imagem: lua,
+            nomeCard: "Lua",
+            valor: 300000
+        },{
+            imagem: europa,
+            nomeCard: "Europa",
+            valor: 300000
+        },{
+            imagem: plutao,
+            nomeCard: "Plutão",
+            valor: 300000
+        },{
+            imagem: marte,
+            nomeCard: "Marte",
+            valor: 300000
+        },{
+            imagem: titan,
+            nomeCard: "Titan",
+            valor: 300000
+        },{
+            imagem: venus,
+            nomeCard: "Venus",
+            valor: 300000
+        }],
+    }
+
     render() {
+        const listaDeViagens = this.state.viagens.map((viagem) => {
+            return (
+                < Card
+                    imagem = {viagem.imagem}
+                    nomeCard = {viagem.nomeCard}
+                    valor = {viagem.valor}
+                />
+            )
+        })
+
         return (
             <div>
                 <HeaderProdutos>
@@ -36,31 +80,7 @@ export default class Produtos extends React.Component {
                 </Ordenacao>
                 </HeaderProdutos>
                 <ContainerProdutos>
-                    <Card
-                        imagem={'https://picsum.photos/200/200'}
-                        nomeCard={'Produto1'}
-                        valor={3000}
-                    />
-                    <Card
-                        imagem={'https://picsum.photos/200/200'}
-                        nomeCard={'Produto2'}
-                        valor={4000}
-                    />
-                    <Card
-                        imagem={'https://picsum.photos/200/200'}
-                        nomeCard={'Produto3'}
-                        valor={5000}
-                    />
-                    <Card
-                        imagem={'https://picsum.photos/200/200'}
-                        nomeCard={'Produto4'}
-                        valor={6000}
-                    />
-                    <Card
-                        imagem={'https://picsum.photos/200/200'}
-                        nomeCard={'Produto5'}
-                        valor={7000}
-                    />
+                    {listaDeViagens}                 
                 </ContainerProdutos>
             </div>
         );

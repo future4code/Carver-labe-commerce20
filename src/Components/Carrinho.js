@@ -9,7 +9,6 @@ height: 100vh;
 `
 export default class Carrinho extends React.Component {
 
-
     render() {
       return (
         <ContainerCarrinho>
