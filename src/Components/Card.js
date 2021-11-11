@@ -16,16 +16,17 @@ const CardButton = styled.div`
 display: flex;
 justify-content: center;
 `
-
 export default class Card extends React.Component {
+
+
     render() {
       return (
         <ContainerCard>
             <CardPhoto src={this.props.imagem} />
             <CardText>{this.props.nomeCard}</CardText>
-            <CardText>{this.props.valor}</CardText>
+            <CardText>Valor: {this.props.valor}</CardText>
             <CardButton> 
-            <button> Adicionar ao carrinho </button>
+            <button onClick={this.onClickEnviar}> Adicionar ao carrinho </button>
           </CardButton>
         </ContainerCard>
       );

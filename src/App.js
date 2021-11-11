@@ -21,12 +21,7 @@ display: grid;
 grid-template-columns: 20vw 1fr 20vw;
 `
 
-
-
 export default class App extends React.Component {
-
-
-
 
   render() {
 
