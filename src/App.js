@@ -118,8 +118,48 @@ export default class App extends React.Component {
         nomeCard: "Venus",
         valor: 60000
       }
+    ],
+    carrinho: [
+      {
+        quantidade: 1,
+        produto: {
+          id: 6,
+          imagem: venus,
+          nomeCard: "Venus",
+          valor: 60000
+        }
+      }
     ]
   }
+
+  adicionarNoCarrinho = (evento) => {
+    let produtoSelecionado = this.state.viagens.filter((viagem) => {
+      return viagem.id === evento.target.value
+    })
+
+    let controle = 0;
+    let carrinhoCarregado = this.state.carrinho.map((itemNoCarrinho) => {
+      if(itemNoCarrinho.produto.id === evento.target.value){
+        itemNoCarrinho.quantidade ++
+        controle ++
+      }
+      return itemNoCarrinho
+    })
+
+    if(controle === 0) {
+      this.setState({
+        carrinho: [...this.state.carrinho,{
+        quantidade: 1,
+        produto: produtoSelecionado[0]
+        }]
+
+      },() => console.log(this.state.carrinho))
+    }else {
+      this.setState({
+        carrinho: carrinhoCarregado
+      }, () => console.log(this.state.carrinho))
+    }
+  };
 
   InputValorMinimo = (event) => {
     this.setState({
@@ -139,18 +179,16 @@ export default class App extends React.Component {
     })
   }
 
-  
-
-
     render() {
 
       const listaDeViagens = this.state.viagens.map((viagem) => {
         return (
-          < Card
+          < Card >
             imagem={viagem.imagem}
             nomeCard={viagem.nomeCard}
             valor={viagem.valor}
-          />
+            <button value={viagem.id} onClick={this.adicionarNoCarrinho}>Comprar</button>
+          </Card>
         )
       })
 
@@ -218,7 +256,7 @@ export default class App extends React.Component {
               <h2>Carrinho:</h2>
               <CarrinhoItem>
                 <p>1x</p>
-                <p>Produto 1</p>
+                <p>{this.state.carrinho.produto}</p>
                 <button> Remover </button>
               </CarrinhoItem>
               <p>Valor Total: R$</p>
