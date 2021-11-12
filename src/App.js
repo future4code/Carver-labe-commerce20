@@ -123,41 +123,41 @@ export default class App extends React.Component {
       {
         quantidade: 1,
         produto: {
-          id: 6,
-          imagem: venus,
-          nomeCard: "Venus",
-          valor: 60000
+          id: 1,
+          imagem: lua,
+          nomeCard: "Lua",
+          valor: 10000,
         }
       }
-    ]
+    ],
   }
 
-  adicionarNoCarrinho = (evento) => {
+  adicionarNoCarrinho = (event) => {
     let produtoSelecionado = this.state.viagens.filter((viagem) => {
-      return viagem.id === evento.target.value
+      return viagem.id === event.target.value
     })
 
     let controle = 0;
-    let carrinhoCarregado = this.state.carrinho.map((itemNoCarrinho) => {
-      if(itemNoCarrinho.produto.id === evento.target.value){
-        itemNoCarrinho.quantidade ++
-        controle ++
+    let carrinhoCarregado = this.state.carrinho.map((item) => {
+      if (item.produto.id === event.target.value) {
+        item.quantidade++
+        controle++
       }
-      return itemNoCarrinho
+      return item
     })
 
-    if(controle === 0) {
+    if (controle === 0) {
       this.setState({
-        carrinho: [...this.state.carrinho,{
-        quantidade: 1,
-        produto: produtoSelecionado[0]
+        carrinho: [...this.state.carrinho, {
+          quantidade: 1,
+          produto: produtoSelecionado[0]
         }]
 
-      },() => console.log(this.state.carrinho))
-    }else {
+      })
+    } else {
       this.setState({
         carrinho: carrinhoCarregado
-      }, () => console.log(this.state.carrinho))
+      })
     }
   };
 
@@ -179,94 +179,95 @@ export default class App extends React.Component {
     })
   }
 
-    render() {
+  render() {
 
-      const listaDeViagens = this.state.viagens.map((viagem) => {
-        return (
-          < Card >
-            imagem={viagem.imagem}
-            nomeCard={viagem.nomeCard}
-            valor={viagem.valor}
-            <button value={viagem.id} onClick={this.adicionarNoCarrinho}>Comprar</button>
-          </Card>
-        )
-      })
 
-      return (
-        <ContainerPrincipal>
-          <header> </header>
-          <ContainerHome>
-            <ContainerFiltro>
-              <h2> Filtros </h2>
-              <label>Valor mínimo:</label>
-              <input
-                value={this.state.valorMinimo}
-                type="number" onChange={this.InputValorMinimo}
+    return (
+      <ContainerPrincipal>
+        <header> </header>
+        <ContainerHome>
+          <ContainerFiltro>
+            <h2> Filtros </h2>
+            <label>Valor mínimo:</label>
+            <input
+              value={this.state.valorMinimo}
+              type="number" onChange={this.InputValorMinimo}
 
-              />
-              <label>Valor máximo:</label>
-              <input
-                value={this.state.valorMaximo}
-                type="number" onChange={this.InputValorMaximo}
-              />
-              <label>Buscar por nome:</label>
-              <input
-                value={this.state.produtoBusca}
-                type="text" onChange={this.InputProdutoBusca}
-              />
-            </ContainerFiltro>
-            <div>
-              <HeaderProdutos>
-                <div>
-                  <p>Quantidade de produtos: 5</p>
-                </div>
-                <Ordenacao>
-                  <label>Ordenação:</label>
-                  <select>
-                    <option>Crescente</option>
-                    <option>Decrescente</option>
-                  </select>
-                </Ordenacao>
-              </HeaderProdutos>
-              <ContainerProdutos>
-                {this.state.viagens.filter((item) => {
-                  return item.nomeCard.toLowerCase().includes(this.state.produtoBusca.toLowerCase())
-                })
+            />
+            <label>Valor máximo:</label>
+            <input
+              value={this.state.valorMaximo}
+              type="number" onChange={this.InputValorMaximo}
+            />
+            <label>Buscar por nome:</label>
+            <input
+              value={this.state.produtoBusca}
+              type="text" onChange={this.InputProdutoBusca}
+            />
+          </ContainerFiltro>
+          <div>
+            <HeaderProdutos>
+              <div>
+                <p>Quantidade de produtos: 5</p>
+              </div>
+              <Ordenacao>
+                <label>Ordenação:</label>
+                <select>
+                  <option>Crescente</option>
+                  <option>Decrescente</option>
+                </select>
+              </Ordenacao>
+            </HeaderProdutos>
+            <ContainerProdutos>
+              {this.state.viagens.filter((item) => {
+                return item.nomeCard.toLowerCase().includes(this.state.produtoBusca.toLowerCase())
+              })
 
                 .filter((item) => {
                   return this.state.valorMinimo === '' || item.valor >= this.state.valorMinimo
                 })
-                
+
                 .filter((item) => {
                   return this.state.valorMaximo === '' || item.valor <= this.state.valorMaximo
                 })
-                
+
                 .map((item) => {
                   return (
-                  <Card
-                  imagem= {item.imagem}
-                  nomeCard={item.nomeCard}
-                  valor={item.valor}
-                  />
+                    <Card
+                      imagem={item.imagem}
+                      nomeCard={item.nomeCard}
+                      valor={item.valor}
+                      addViagem={() => this.adicionarNoCarrinho(item.id)}
+                      value={item.id}
+
+                    />
                   )
                 })}
-              </ContainerProdutos>
-            </div>
-            <ContainerCarrinho>
-              <h2>Carrinho:</h2>
-              <CarrinhoItem>
-                <p>1x</p>
-                <p>{this.state.carrinho.produto}</p>
-                <button> Remover </button>
-              </CarrinhoItem>
-              <p>Valor Total: R$</p>
-            </ContainerCarrinho>
-          </ContainerHome>
-          <footer></footer>
-        </ContainerPrincipal>
-        
-      );
-    }
+            </ContainerProdutos>
+          </div>
+          <ContainerCarrinho>
+            {/* Pensar em como incluir as coisas no carrinho, depois de pensar o que está errado na função */}
+            <h2>Carrinho:</h2>
+
+            <ItemCarrinho
+              quantidadeCarrinho='1x'
+              viagemNome='Produto' 
+            />
+
+            <ItemCarrinho
+              quantidadeCarrinho='1x'
+              viagemNome= 'Produto'
+            />
+
+
+            <p>Valor Total: R$</p>
+          </ContainerCarrinho>
+        </ContainerHome>
+        <footer></footer>
+      </ContainerPrincipal>
+
+    );
   }
+}
 
 
