@@ -15,14 +15,34 @@ import venus from './img/venus.jpeg';
 // App
 const ContainerPrincipal = styled.div`
 display: grid;
-grid-template-rows: 60px 1fr 60px;
+grid-template-rows: 50px 1fr 50px;
+margin: 0;
+padding: 0;
+margin-bottom: -50vw;
+font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+
 
 header{
-  background-color: yellow;
+  background-color: #000080;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+p{
+  margin: 10px;
 }
 
 footer{
-  background-color: yellow;
+  background-color:  #000080;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
 }
 `
 const ContainerHome = styled.div`
@@ -34,19 +54,25 @@ grid-template-columns: 20vw 1fr 20vw;
 
 const ContainerProdutos = styled.div`
 display: grid;
-grid-template-rows: 1fr 1fr;
-grid-template-columns: 1fr 1fr 1fr;
-grid-gap: 30px 30px;
-/* width: 60vw; */
-border: 1px solid black;
+grid-template-columns: repeat(3, 1fr);
+grid-template-rows: repeat(2, 2fr);
+grid-column-gap: 1vw;
+grid-row-gap: 1vh;
+justify-items: center;
+align-items: center;
+background-color: #ffff;
+color: black;
 `
+
 const HeaderProdutos = styled.div`
 display: flex;
 justify-content: space-between;
+font-size: 15px;
 `
 const Ordenacao = styled.div`
 display:flex;
 align-items: center;
+font-size: 15px;
 `
 
 // Carrinho 
@@ -55,7 +81,9 @@ const ContainerCarrinho = styled.div`
 display: flex;
 flex-direction: column;
 border: 1px solid black;
-height: 100vh;
+height: 100%;
+margin: 6px;
+text-align: center;
 `
 
 // filtro 
@@ -64,11 +92,14 @@ const ContainerFiltro = styled.div`
 display: flex;
 flex-direction: column;
 border: 1px solid black;
-height: 100vh;
+height: 100%;
+margin: 6px;
+
 
 input {
 width: 50%;
 margin-bottom: 30px;
+margin: 10px;
 }
 `
 // item carrinho
@@ -76,7 +107,7 @@ margin-bottom: 30px;
 const CarrinhoItem = styled.div`
 display: flex;
 justify-content: space-between;
-align-items: center;
+text-items: center;
 `
 
 export default class App extends React.Component {
@@ -184,7 +215,9 @@ export default class App extends React.Component {
 
     return (
       <ContainerPrincipal>
-        <header> </header>
+        <header> 
+          <p>Labe-Ecommerce</p>
+        </header>
         <ContainerHome>
           <ContainerFiltro>
             <h2> Filtros </h2>
@@ -263,7 +296,9 @@ export default class App extends React.Component {
             <p>Valor Total: R$</p>
           </ContainerCarrinho>
         </ContainerHome>
-        <footer></footer>
+        <footer>
+          <p>Grupo 20®</p>
+        </footer>
       </ContainerPrincipal>
 
     );
