@@ -16,7 +16,7 @@ export default class ItemCarrinho extends React.Component {
             <CarrinhoItem>
                 <p>{this.props.quantidadeCarrinho}</p>
                 <p>{this.props.viagemNome}</p>
-                <button> Remover </button>
+                <button onClick={this.props.excluiViagem}> Remover </button>
             </CarrinhoItem>
         );
     }
