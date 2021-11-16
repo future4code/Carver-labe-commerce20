@@ -1,8 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Produtos from './Components/Produtos';
-import Filtro from './Components/Filtro';
-import Carrinho from './Components/Carrinho';
 import Card from './Components/Card';
 import ItemCarrinho from './Components/ItemCarrinho'
 import lua from './img/lua.jpeg';
@@ -321,7 +318,6 @@ export default class App extends React.Component {
             </ContainerProdutos>
           </div>
           <ContainerCarrinho>
-            {/* Pensar em como incluir as coisas no carrinho, depois de pensar o que está errado na função */}
             <h2>Carrinho:</h2>
 
             {this.state.carrinho.map((item) => {
