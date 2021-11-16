@@ -24,7 +24,7 @@ O projeto foi desenvolvido usando as seguintes tecnologias:
 [Styled-Components](https://styled-components.com/docs)
 
 ## Link de  acesso ao projeto
-https://fat-home.surge.sh
+https://fat-home.surge.sh/
 
 ## Fotos do Projeto
 ![image](https://user-images.githubusercontent.com/91228901/142050914-1232457d-6b0b-4205-9000-edb0c416dc15.png)
