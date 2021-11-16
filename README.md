@@ -27,7 +27,8 @@ O projeto foi desenvolvido usando as seguintes tecnologias:
 https://fat-home.surge.sh
 
 ## :boom: Fotos do Projeto :boom:
-
+![image](https://user-images.githubusercontent.com/91228901/142050914-1232457d-6b0b-4205-9000-edb0c416dc15.png)
+![image](https://user-images.githubusercontent.com/91228901/142051020-829b8dae-27a8-4684-8935-795e7bf53bf3.png)
 
 
 ## Desenvolvido por Ederson, Pedro Henrique e Robson.
