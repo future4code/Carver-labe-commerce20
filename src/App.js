@@ -121,37 +121,37 @@ export default class App extends React.Component {
         id: 1,
         imagem: lua,
         nomeCard: "Lua",
-        valor: 10000,
+        valor: 10500.00,
         quantidade: 1
       }, {
         id: 2,
         imagem: europa,
         nomeCard: "Europa",
-        valor: 20000,
+        valor: 20800.00,
         quantidade: 1
       }, {
         id: 3,
         imagem: plutao,
         nomeCard: "Plutão",
-        valor: 30000,
+        valor: 20900.00,
         quantidade: 1
       }, {
         id: 4,
         imagem: marte,
         nomeCard: "Marte",
-        valor: 40000,
+        valor: 10600.00,
         quantidade: 1
       }, {
         id: 5,
         imagem: titan,
         nomeCard: "Titan",
-        valor: 50000,
+        valor: 50000.00,
         quantidade: 1
       }, {
         id: 6,
         imagem: venus,
         nomeCard: "Venus",
-        valor: 60000,
+        valor: 10400.00,
         quantidade: 1
       }
     ],
@@ -225,7 +225,57 @@ export default class App extends React.Component {
     })
   }
 
+  OnChangeSeletor = (event) => {
+    this.setState({
+      ordenacao: event.target.value
+    })
+  }
+
+  calculaTotal = (array) => {
+    let total = 0
+
+    for(let viagens of array){
+      total += viagens.valor * viagens.quantidade
+    }
+
+    return total.toFixed(2)
+  }
+
   render() {
+
+    const produtos = this.state.viagens.filter((item) => {
+      return item.nomeCard.toLowerCase().includes(this.state.produtoBusca.toLowerCase())
+    })
+
+      .filter((item) => {
+        return this.state.valorMinimo === '' || item.valor >= this.state.valorMinimo
+      })
+
+      .filter((item) => {
+        return this.state.valorMaximo === '' || item.valor <= this.state.valorMaximo
+      })
+
+      .sort((item1, item2) => {
+        if (this.state.ordenacao === 'crescente') {
+        return item1.valor - item2.valor 
+
+        } else if (this.state.ordenacao === 'decrescente'){
+          return item2.valor - item1.valor
+        }
+      })
+
+      .map((item) => {
+        return (
+          <Card
+            imagem={item.imagem}
+            nomeCard={item.nomeCard}
+            valor={item.valor}
+            addViagem={() => this.adicionarNoCarrinho(item.id)}
+            value={item.id}
+
+          />
+        )
+      })
 
 
     return (
@@ -256,41 +306,18 @@ export default class App extends React.Component {
           <div>
             <HeaderProdutos>
               <div>
-                <p>Quantidade de produtos: 6</p>
+                <p>Quantidade de produtos: {produtos.length} </p>
               </div>
               <Ordenacao>
                 <label>Ordenação:</label>
-                <select>
-                  <option>Crescente</option>
-                  <option>Decrescente</option>
+                <select onChange={this.OnChangeSeletor}>
+                  <option value="crescente">Crescente</option>
+                  <option value="decrescente">Decrescente</option>
                 </select>
               </Ordenacao>
             </HeaderProdutos>
             <ContainerProdutos>
-              {this.state.viagens.filter((item) => {
-                return item.nomeCard.toLowerCase().includes(this.state.produtoBusca.toLowerCase())
-              })
-
-                .filter((item) => {
-                  return this.state.valorMinimo === '' || item.valor >= this.state.valorMinimo
-                })
-
-                .filter((item) => {
-                  return this.state.valorMaximo === '' || item.valor <= this.state.valorMaximo
-                })
-
-                .map((item) => {
-                  return (
-                    <Card
-                      imagem={item.imagem}
-                      nomeCard={item.nomeCard}
-                      valor={item.valor}
-                      addViagem={() => this.adicionarNoCarrinho(item.id)}
-                      value={item.id}
-
-                    />
-                  )
-                })}
+              {produtos}
             </ContainerProdutos>
           </div>
           <ContainerCarrinho>
@@ -305,7 +332,7 @@ export default class App extends React.Component {
                   excluiViagem={() => this.removerDoCarrinho(item.id)} />
               )
             })}
-            <p>Valor Total: R$</p>
+            <p>Valor Total: R${this.calculaTotal(this.state.carrinho)}</p>
           </ContainerCarrinho>
         </ContainerHome>
         <footer>
