@@ -17,16 +17,16 @@ Filtro
 Por valor mínimo e máximo;
 Por nome do produto;
 
-## 🚀 Tecnologias utilizadas
+## Tecnologias utilizadas
 O projeto foi desenvolvido usando as seguintes tecnologias:
 
 [React.js](https://pt-br.reactjs.org/docs/getting-started.html)
 [Styled-Components](https://styled-components.com/docs)
 
-## 🌎 Link de  acesso ao projeto
+## Link de  acesso ao projeto
 https://fat-home.surge.sh
 
-## :boom: Fotos do Projeto :boom:
+## Fotos do Projeto
 ![image](https://user-images.githubusercontent.com/91228901/142050914-1232457d-6b0b-4205-9000-edb0c416dc15.png)
 ![image](https://user-images.githubusercontent.com/91228901/142051020-829b8dae-27a8-4684-8935-795e7bf53bf3.png)
 
