@@ -22,7 +22,12 @@ padding: 0 10px;
 font-size: 20px;
 
 `
-const CardButton = styled.button`
+const CardButton = styled.div`
+display: flex;
+justify-content: center;
+`
+
+const ButtonStyle = styled.button`
 padding: 5px;
 width: 100%;
 background-color: fff;
@@ -47,7 +52,7 @@ export default class Card extends React.Component {
             <CardText>{this.props.nomeCard}</CardText>
             <CardText>Valor: R${this.props.valor}</CardText>
             <CardButton> 
-            <button value={this.props.value} onClick={this.props.addViagem}> Adicionar ao carrinho </button>
+            <ButtonStyle value={this.props.value} onClick={this.props.addViagem}> Adicionar ao carrinho </ButtonStyle>
           </CardButton>
         </ContainerCard>
       );

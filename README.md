@@ -6,11 +6,11 @@ Um e-commerce que deverá conter 3 partes:
 Home
 
 Mostrando todos os produtos;
-Existe alguma forma de ordenar os produtos por ordem crescente ou decrescente de preço;
+Possibilidade de ordenar os produtos por ordem crescente ou decrescente de preço;
 
 Carrinho
 
-Falta funcionar ainda;
+Função de adicionar e remover do carrinho. Cálculo de valor total dos itens incluído;
 
 Filtro
 
@@ -24,11 +24,10 @@ O projeto foi desenvolvido usando as seguintes tecnologias:
 [Styled-Components](https://styled-components.com/docs)
 
 ## 🌎 Link de  acesso ao projeto
-[Click Aqui Projeto](https://.../)
+fat-home.surge.sh
 
 ## :boom: Fotos do Projeto :boom:
-![image]
-![image]
+
 
 
 ## Desenvolvido por Ederson, Pedro Henrique e Robson.

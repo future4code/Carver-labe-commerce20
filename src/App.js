@@ -1,8 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Produtos from './Components/Produtos';
-import Filtro from './Components/Filtro';
-import Carrinho from './Components/Carrinho';
 import Card from './Components/Card';
 import ItemCarrinho from './Components/ItemCarrinho'
 import lua from './img/lua.jpeg';
@@ -104,93 +101,108 @@ margin: 10px;
 `
 // item carrinho
 
-const CarrinhoItem = styled.div`
-display: flex;
-justify-content: space-between;
-text-items: center;
-`
+// const CarrinhoItem = styled.div`
+// display: flex;
+// justify-content: space-between;
+// text-items: center;
+// `
 
 export default class App extends React.Component {
   state = {
     valorMinimo: '',
     valorMaximo: '',
     produtoBusca: '',
-    quantidade: '',
     ordenacao: 'crescente',
     viagens: [
       {
         id: 1,
         imagem: lua,
         nomeCard: "Lua",
-        valor: 10000
+        valor: 10500.00,
+        quantidade: 1
       }, {
         id: 2,
         imagem: europa,
         nomeCard: "Europa",
-        valor: 20000
+        valor: 20800.00,
+        quantidade: 1
       }, {
         id: 3,
         imagem: plutao,
         nomeCard: "Plutão",
-        valor: 30000
+        valor: 20900.00,
+        quantidade: 1
       }, {
         id: 4,
         imagem: marte,
         nomeCard: "Marte",
-        valor: 40000
+        valor: 10600.00,
+        quantidade: 1
       }, {
         id: 5,
         imagem: titan,
         nomeCard: "Titan",
-        valor: 50000
+        valor: 50000.00,
+        quantidade: 1
       }, {
         id: 6,
         imagem: venus,
         nomeCard: "Venus",
-        valor: 60000
+        valor: 10400.00,
+        quantidade: 1
       }
     ],
-    carrinho: [
-      {
-        quantidade: 1,
-        produto: {
-          id: 1,
-          imagem: lua,
-          nomeCard: "Lua",
-          valor: 10000,
-        }
-      }
-    ],
+    carrinho: []
   }
 
   adicionarNoCarrinho = (event) => {
-    let produtoSelecionado = this.state.viagens.filter((viagem) => {
-      return viagem.id === event.target.value
+    let viagensEscolhidas = this.state.viagens.filter((viagem) => {
+      return event === viagem.id
     })
 
-    let controle = 0;
+    let controleDoCarrinho = 0;
     let carrinhoCarregado = this.state.carrinho.map((item) => {
-      if (item.produto.id === event.target.value) {
+      if (event === item.id) {
+
         item.quantidade++
-        controle++
+        controleDoCarrinho++
       }
       return item
     })
 
-    if (controle === 0) {
+    if (controleDoCarrinho === 0) {
       this.setState({
-        carrinho: [...this.state.carrinho, {
-          quantidade: 1,
-          produto: produtoSelecionado[0]
-        }]
-
+        carrinho: [...this.state.carrinho, viagensEscolhidas[0]]
       })
+
     } else {
       this.setState({
         carrinho: carrinhoCarregado
       })
     }
   };
+
+  removerDoCarrinho = (event) => {
+    let controle = 0;
+
+    let viagemNoCarrinho = this.state.carrinho.map((item) => {
+      if (item.id === event && item.quantidade > 1) {
+        controle++
+        item.quantidade--
+      }
+
+      return item
+    })
+
+    if (controle === 0) {
+      let carrinhoAtualizado = this.state.carrinho.filter((item) =>{
+        return item.id !== event
+      })
+      this.setState({carrinho: carrinhoAtualizado})
+    } else {
+      this.setState({carrinho: viagemNoCarrinho})
+    }
+  }
 
   InputValorMinimo = (event) => {
     this.setState({
@@ -210,12 +222,62 @@ export default class App extends React.Component {
     })
   }
 
+  OnChangeSeletor = (event) => {
+    this.setState({
+      ordenacao: event.target.value
+    })
+  }
+
+  calculaTotal = (array) => {
+    let total = 0
+
+    for(let viagens of array){
+      total += viagens.valor * viagens.quantidade
+    }
+
+    return total.toFixed(2)
+  }
+
   render() {
+
+    const produtos = this.state.viagens.filter((item) => {
+      return item.nomeCard.toLowerCase().includes(this.state.produtoBusca.toLowerCase())
+    })
+
+      .filter((item) => {
+        return this.state.valorMinimo === '' || item.valor >= this.state.valorMinimo
+      })
+
+      .filter((item) => {
+        return this.state.valorMaximo === '' || item.valor <= this.state.valorMaximo
+      })
+
+      .sort((item1, item2) => {
+        if (this.state.ordenacao === 'crescente') {
+        return item1.valor - item2.valor 
+
+        } else if (this.state.ordenacao === 'decrescente'){
+          return item2.valor - item1.valor
+        }
+      })
+
+      .map((item) => {
+        return (
+          <Card
+            imagem={item.imagem}
+            nomeCard={item.nomeCard}
+            valor={item.valor}
+            addViagem={() => this.adicionarNoCarrinho(item.id)}
+            value={item.id}
+
+          />
+        )
+      })
 
 
     return (
       <ContainerPrincipal>
-        <header> 
+        <header>
           <p>Labe-Ecommerce</p>
         </header>
         <ContainerHome>
@@ -241,59 +303,32 @@ export default class App extends React.Component {
           <div>
             <HeaderProdutos>
               <div>
-                <p>Quantidade de produtos: 5</p>
+                <p>Quantidade de produtos: {produtos.length} </p>
               </div>
               <Ordenacao>
                 <label>Ordenação:</label>
-                <select>
-                  <option>Crescente</option>
-                  <option>Decrescente</option>
+                <select onChange={this.OnChangeSeletor}>
+                  <option value="crescente">Crescente</option>
+                  <option value="decrescente">Decrescente</option>
                 </select>
               </Ordenacao>
             </HeaderProdutos>
             <ContainerProdutos>
-              {this.state.viagens.filter((item) => {
-                return item.nomeCard.toLowerCase().includes(this.state.produtoBusca.toLowerCase())
-              })
-
-                .filter((item) => {
-                  return this.state.valorMinimo === '' || item.valor >= this.state.valorMinimo
-                })
-
-                .filter((item) => {
-                  return this.state.valorMaximo === '' || item.valor <= this.state.valorMaximo
-                })
-
-                .map((item) => {
-                  return (
-                    <Card
-                      imagem={item.imagem}
-                      nomeCard={item.nomeCard}
-                      valor={item.valor}
-                      addViagem={() => this.adicionarNoCarrinho(item.id)}
-                      value={item.id}
-
-                    />
-                  )
-                })}
+              {produtos}
             </ContainerProdutos>
           </div>
           <ContainerCarrinho>
-            {/* Pensar em como incluir as coisas no carrinho, depois de pensar o que está errado na função */}
             <h2>Carrinho:</h2>
 
-            <ItemCarrinho
-              quantidadeCarrinho='1x'
-              viagemNome='Produto' 
-            />
-
-            <ItemCarrinho
-              quantidadeCarrinho='1x'
-              viagemNome= 'Produto'
-            />
-
-
-            <p>Valor Total: R$</p>
+            {this.state.carrinho.map((item) => {
+              return (
+                <ItemCarrinho
+                  viagemNome={item.nomeCard}
+                  quantidadeCarrinho={item.quantidade}
+                  excluiViagem={() => this.removerDoCarrinho(item.id)} />
+              )
+            })}
+            <p>Valor Total: R${this.calculaTotal(this.state.carrinho)}</p>
           </ContainerCarrinho>
         </ContainerHome>
         <footer>
